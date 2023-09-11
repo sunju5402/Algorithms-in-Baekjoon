@@ -32,6 +32,8 @@ public class Main {
 	}
 
 	private static void dfs(int idx, int total) {
+        if (result <= total) return;
+        
 		if (idx == size) {
 			result = Math.min(result, total);
 			return;
