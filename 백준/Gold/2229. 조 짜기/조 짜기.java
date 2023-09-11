@@ -21,9 +21,7 @@ public class Main {
 			for (int j = 1; i - j >= 0; j++) {
 				max = Math.max(max, arr[i - j]);
 				min = Math.min(min, arr[i - j]);
-				if (j >= 2) {
-					dp[i] = Math.max(dp[i], dp[i - j] + max - min);
-				}
+				dp[i] = Math.max(dp[i], dp[i - j] + max - min);
 			}
 		}
 
