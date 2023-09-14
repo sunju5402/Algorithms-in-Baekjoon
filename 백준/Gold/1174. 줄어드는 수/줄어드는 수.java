@@ -14,19 +14,16 @@ public class Main {
 		dfs(0, 0);
 		Collections.sort(list); // 9부터 시작했으므로 오름차순 정렬
 
-		if (N > list.size()) { // N이 만들 수 있는 줄어드는 수의 개수보다 클 경우
+		if (N >= list.size()) { // N이 만들 수 있는 줄어드는 수의 개수보다 클 경우
 			System.out.println(-1);
 		} else {
-			System.out.println(list.get(N - 1));
+			System.out.println(list.get(N));
 		}
 	}
 
 	private static void dfs(int idx, long total) {
-		if (!list.contains(total)) { // 현재의 수가 이전까지 만든 줄어드는 수에 포함되지 않으면(중복되지 않으면)
+		if (idx == nums.length) { // 숫자 배열을 너어가면 stop
 			list.add(total);
-		}
-
-		if (idx >= nums.length) { // 숫자 배열을 너어가면 stop
 			return;
 		}
 
