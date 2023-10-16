@@ -26,7 +26,6 @@ public class Main {
 			}
 		}
 
-
 		int result = bfs();
 		System.out.println(result);
 	}
@@ -35,6 +34,8 @@ public class Main {
 		Queue<int[]> q = new ArrayDeque<>();
 		q.add(new int[]{coins[0], coins[1], coins[2], coins[3], 0});
 		int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+		boolean visited[][][][] = new boolean[N][M][N][M];
+        visited[coins[0]][coins[1]][coins[2]][coins[3]] = true;
 		while (!q.isEmpty()) {
 			int[] tmp = q.poll();
 			for (int i = 0; i < 4; i++) {
@@ -52,7 +53,6 @@ public class Main {
 				if (nx1 < 0 || nx1 >= N || ny1 < 0 || ny1 >= M) {
 					out++;
 				}
-
 				if (nx2 < 0 || nx2 >= N || ny2 < 0 || ny2 >= M) {
 					out++;
 				}
@@ -62,16 +62,22 @@ public class Main {
 				} else if (out == 1) {
 					return cnt;
 				} else {
+					if (visited[nx1][ny1][nx2][ny2]) continue;
+
 					if (map[nx1][ny1] == '.') {
 						if (map[nx2][ny2] == '.') {
+							visited[nx1][ny1][nx2][ny2] = true;
 							q.add(new int[]{nx1, ny1, nx2, ny2, cnt});
 						} else {
+							visited[nx1][ny1][tmp[2]][tmp[3]] = true;
 							q.add(new int[]{nx1, ny1, tmp[2], tmp[3], cnt});
 						}
 					} else {
 						if (map[nx2][ny2] == '.') {
+							visited[tmp[0]][tmp[1]][nx2][ny2] = true;
 							q.add(new int[]{tmp[0], tmp[1], nx2, ny2, cnt});
 						} else {
+							visited[tmp[0]][tmp[1]][tmp[2]][tmp[3]] = true;
 							q.add(new int[]{tmp[0], tmp[1], tmp[2], tmp[3], cnt});
 						}
 					}
