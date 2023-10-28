@@ -16,7 +16,8 @@ public class Main {
 		int R = Integer.parseInt(st.nextToken());
 		int[][] cow = new int[K][2];
 
-		map = new int[N + N][N + N];
+		int size = N + N;
+		map = new int[size][size];
 		for (int i = 0; i < R; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			int r = Integer.parseInt(st.nextToken());
@@ -38,7 +39,7 @@ public class Main {
 		}
 
 		for (int i = 0; i < K - 1; i++) {
-			result += K - i - 1 - bfs(cow[i][0], cow[i][1], new boolean[N * 2][N * 2]);
+			result += K - i - 1 - bfs(cow[i][0], cow[i][1], new boolean[size][size]);
 		}
 
 		System.out.println(result);
