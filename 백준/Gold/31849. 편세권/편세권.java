@@ -20,7 +20,6 @@ public class Main {
 			map[a - 1][b - 1] = p;
 		}
 
-		// PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> Integer.compare(o1[2], o2[2]));
 		Queue<int[]> pq = new ArrayDeque<>();
 		boolean[][] visited = new boolean[N][M];
 		for (int i = 0; i < C; i++) {
@@ -33,6 +32,7 @@ public class Main {
 
 		int[][] dir = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 		int result = Integer.MAX_VALUE;
+		int cnt = 0;
 		while(!pq.isEmpty()) {
 			int[] tmp = pq.poll();
 			for (int d = 0; d < dir.length; d++) {
@@ -47,10 +47,14 @@ public class Main {
 				visited[nx][ny] = true;
 				pq.add(new int[] {nx, ny, distance});
 
-
 				if (map[nx][ny] != 0) { // 방이라면
 					result = Math.min(result, distance * map[nx][ny]);
+					cnt++;
 				}
+			}
+			
+			if (cnt == R) {
+				break;
 			}
 		}
 
