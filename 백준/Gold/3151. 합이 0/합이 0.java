@@ -14,27 +14,27 @@ public class Main {
 
 		for (int i = 0; i < N; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
-			if (arr[i] == 0) {
-				zeroCnt++;
-			}
+			//if (arr[i] == 0) {
+				//zeroCnt++;
+			//}
 		}
 
 		Arrays.sort(arr);
 
-		for (int i = 0; i < N; i++) {
-			if (arr[i] >= 0) {
-				idx = i;
-				break;
-			}
-		}
+		//for (int i = 0; i < N; i++) {
+			//if (arr[i] >= 0) {
+			//	idx = i;
+			//	break;
+			//}
+		//}
 
 		long result = 0;
 
-		if (idx == 0) {
-			if (zeroCnt >= 3) {
-				result += zeroCnt * (zeroCnt - 1) * (zeroCnt - 2) / 6;
-			}
-		} else if (idx > 0) { // 주어진 수가 모두 음수거나 양수일 경우를 제외
+		//if (idx == 0) {
+		//	if (zeroCnt >= 3) {
+		//		result += zeroCnt * (zeroCnt - 1) * (zeroCnt - 2) / 6;
+			//}
+	//	} else if (idx > 0) { // 주어진 수가 모두 음수거나 양수일 경우를 제외
 			for (int i = 0; i < N; i++) {
 				int p1 = i + 1;
 				int p2 = N - 1;
@@ -47,13 +47,13 @@ public class Main {
 							break;
 						} else {
 							long rightCnt = 1;
-							while (p1 < p2 - 1 && arr[p2] == arr[p2 - 1]) {
+							while (arr[p2] == arr[p2 - 1]) {
 								rightCnt++;
 								p2--;
 							}
 
 							long leftCnt = 1;
-							while (p1 + 1 < p2 && arr[p1] == arr[p1 + 1]) {
+							while (arr[p1] == arr[p1 + 1]) {
 								leftCnt++;
 								p1++;
 							}
@@ -100,7 +100,7 @@ public class Main {
 			// 		}
 			// 	}
 			// }
-		}
+	//	}
 
 		System.out.println(result);
 	}
