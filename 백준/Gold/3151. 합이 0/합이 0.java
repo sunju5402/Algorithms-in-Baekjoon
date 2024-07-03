@@ -2,58 +2,106 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int N;
-	static long answer = 0L;
-	static int[] data;
-
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = null;
 
-		N = Integer.parseInt(br.readLine());
-		data = new int[N];
-		st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+		int[] arr = new int[N];
+		int idx = -1;
+		long zeroCnt = 0;
+
 		for (int i = 0; i < N; i++) {
-			data[i] = Integer.parseInt(st.nextToken());
-		}
-		Arrays.sort(data);
-		for (int i = 0; i < N; i++) {
-			if (data[i] > 0) break;
-			int start = i + 1;
-			int end = N - 1;
-
-			while (start < end) {
-				int s = 1;
-				int e = 1;
-				int current = data[i] + data[start] + data[end];
-				if (current == 0) {
-					if (data[start] == data[end]) {    // start == end일 경우
-						answer += comb(end - start + 1);
-						break;
-					}
-					// start의 다음 값이 같은 경우
-					while (start + 1 < end && data[start] == data[start + 1]) {
-						s++;
-						start++;
-					}
-					// end의 다음 값이 같은 경우
-					while (start < end - 1 && data[end] == data[end - 1]) {
-						e++;
-						end--;
-					}
-
-					answer += s * e;
-				}
-
-				if (current > 0)
-					end--;
-				else start++;
+			arr[i] = Integer.parseInt(st.nextToken());
+			if (arr[i] == 0) {
+				zeroCnt++;
 			}
 		}
-		System.out.println(answer);
-	}
 
-	static int comb(int n) {
-		return n * (n - 1) / 2;
+		Arrays.sort(arr);
+
+		for (int i = 0; i < N; i++) {
+			if (arr[i] >= 0) {
+				idx = i;
+				break;
+			}
+		}
+
+		long result = 0;
+
+		if (idx == 0) {
+			if (zeroCnt >= 3) {
+				result += zeroCnt * (zeroCnt - 1) * (zeroCnt - 2) / 6;
+			}
+		} else if (idx > 0) { // 주어진 수가 모두 음수거나 양수일 경우를 제외
+			for (int i = 0; i < N; i++) {
+				int p1 = i + 1;
+				int p2 = N - 1;
+
+				while (p1 < p2) {
+					int total = arr[p1] + arr[p2] + arr[i];
+					if (total == 0) {
+						if (arr[p1] == arr[p2]) {
+							result += (long)(p2 - p1 + 1) * (p2 - p1) / 2;
+							break;
+						} else {
+							long rightCnt = 1;
+							while (p1 < p2 - 1 && arr[p2] == arr[p2 - 1]) {
+								rightCnt++;
+								p2--;
+							}
+
+							long leftCnt = 1;
+							while (p1 + 1 < p2 && arr[p1] == arr[p1 + 1]) {
+								leftCnt++;
+								p1++;
+							}
+							result += rightCnt * leftCnt;
+							p1++;
+						}
+					} else if (total > 0) {
+						p2--;
+					} else {
+						p1++;
+					}
+				}
+			}
+
+			// for (int i = idx; i < N; i++) {
+			// 	int p1 = 0;
+			// 	int p2 = idx - 1;
+			//
+			// 	while (p1 < p2) {
+			// 		int total = arr[p1] + arr[p2] + arr[i];
+			// 		if (total == 0) {
+			// 			if (arr[p1] == arr[p2]) {
+			// 				result += (long)(p2 - p1 + 1) * (p2 - p1) / 2;
+			// 				break;
+			// 			} else {
+			// 				long rightCnt = 1;
+			// 				while (p1 < p2 - 1 && arr[p2] == arr[p2 - 1]) {
+			// 					rightCnt++;
+			// 					p2--;
+			// 				}
+			//
+			// 				long leftCnt = 1;
+			// 				while (p1 + 1 < p2 && arr[p1] == arr[p1 + 1]) {
+			// 					leftCnt++;
+			// 					p1++;
+			// 				}
+			// 				result += rightCnt * leftCnt;
+			// 				p1++;
+			// 			}
+			// 		} else if (total > 0) {
+			// 			p2--;
+			// 		} else {
+			// 			p1++;
+			// 		}
+			// 	}
+			// }
+		}
+
+		System.out.println(result);
 	}
 }
