@@ -15,7 +15,7 @@ public class Main {
 				cnt++;
 			}
 
-			if (total < N) {
+			if (total <= N) {
 				p2++;
 				total += p2;
 			} else {
