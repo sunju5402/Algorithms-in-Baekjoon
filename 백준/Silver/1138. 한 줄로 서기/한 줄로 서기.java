@@ -10,18 +10,28 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
 		int[] arr = new int[N + 1];
-		List<Integer> list = new ArrayList<>();
+		int[] result = new int[N];
 
 		for (int i = 1; i <= N; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 
-		for (int i = N; i >= 1; i--) {
-			list.add(arr[i], i);
+		for (int i = 1; i <= N; i++) {
+			int j = 0;
+
+			while (true) {
+				if (arr[i] == 0 && result[j] == 0) {
+					result[j] = i;
+					break;
+				} else if (result[j] == 0) {
+					arr[i]--;
+				}
+				j++;
+			}
 		}
 
 		StringBuilder sb = new StringBuilder();
-		for (int n : list) {
+		for (int n : result) {
 			sb.append(n).append(" ");
 		}
 
