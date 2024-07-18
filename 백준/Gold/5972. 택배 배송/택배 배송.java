@@ -51,7 +51,7 @@ public class Main {
 			visited[cur] = true;
 
 			for (Node next : list.get(cur)) {
-				if (distance[next.node] > distance[cur] + next.cnt) {
+				if (!visited[next.node] && distance[next.node] > distance[cur] + next.cnt) {
 					distance[next.node] = distance[cur] + next.cnt;
 					pq.add(new Node(next.node, distance[next.node]));
 				}
