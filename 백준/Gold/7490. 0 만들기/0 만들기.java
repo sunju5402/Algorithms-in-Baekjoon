@@ -11,46 +11,16 @@ public class Main {
 
 		for (int t = 0; t < T; t++) {
 			N = Integer.parseInt(br.readLine());
-			dfs(1, 1, "1");
+			dfs(1, 1, 1, 0,  "1");
 			sb.append("\n");
 		}
 
 		System.out.print(sb.toString());
 	}
 
-	private static void dfs(int n, int depth, String s) {
+	private static void dfs(int n, int op, int depth, int total, String s) {
 		if (depth == N) {
-			int total = 0;
-			StringBuilder tmp = new StringBuilder();
-			String ss = s.replace(" ", "");
-			char c = '+';
-			for (int i = 0; i < ss.length(); i++) {
-				if (ss.charAt(i) == '+') {
-					if (c == '+') {
-						total += Integer.parseInt(tmp.toString());
-					} else {
-						total -= Integer.parseInt(tmp.toString());
-					}
-					c = '+';
-					tmp = new StringBuilder();
-				} else if (ss.charAt(i) == '-') {
-					if (c == '+') {
-						total += Integer.parseInt(tmp.toString());
-					} else {
-						total -= Integer.parseInt(tmp.toString());
-					}
-					c = '-';
-					tmp = new StringBuilder();
-				} else {
-					tmp.append(ss.charAt(i));
-				}
-			}
-
-			if (c == '+') {
-				total += Integer.parseInt(tmp.toString());
-			} else {
-				total -= Integer.parseInt(tmp.toString());
-			}
+			total += n * op;
 
 			if (total == 0) {
 				sb.append(s).append("\n");
@@ -58,8 +28,8 @@ public class Main {
 			return;
 		}
 
-		dfs(n + 1, depth + 1, s + " " + (n + 1));
-		dfs(n + 1, depth + 1, s + "+" + (n + 1));
-		dfs(n + 1, depth + 1, s + "-" + (n + 1));
+		dfs(n * 10 + depth + 1, op, depth + 1, total, s + " " + (depth + 1));
+		dfs(depth + 1, 1, depth + 1,  total + n * op, s + "+" + (depth + 1));
+		dfs(depth + 1, -1, depth + 1, total + n * op, s + "-" + (depth + 1));
 	}
 }
