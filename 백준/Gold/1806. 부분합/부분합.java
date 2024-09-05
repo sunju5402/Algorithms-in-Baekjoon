@@ -34,7 +34,7 @@ public class Main {
 				result = Math.min(result, p2 - p1);
 			}
 
-			if ((arr[p2] - arr[p1]) < S) {
+			if (sum < S) {
 				p2++;
 			} else {
 				p1++;
